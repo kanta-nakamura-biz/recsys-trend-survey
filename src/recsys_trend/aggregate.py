@@ -104,6 +104,37 @@ def llm_cooccurrence(core: pd.DataFrame, topics: list[str]) -> pd.DataFrame:
     return out.sort_values("llm_share", ascending=False)
 
 
+# RecSys の公表統計（https://recsys.acm.org/statistics/, 2026-08-22 参照）。
+# 抽出したフル論文数の妥当性を突き合わせるための外部基準。
+RECSYS_OFFICIAL_LONG = {2019: 36, 2020: 39, 2021: 49, 2022: 39,
+                        2023: 47, 2024: 58, 2025: 49}
+
+
+def recsys_count_check(df: pd.DataFrame) -> pd.DataFrame:
+    """RecSys のフル論文抽出数を公表統計と突き合わせる。"""
+    r = df[df.venue == "RecSys"]
+    ours = r[r.track_class == "full"].groupby("year").size()
+    repro = r[r.track_class == "other_track"].groupby("year").size()
+    out = pd.DataFrame({
+        "year": list(RECSYS_OFFICIAL_LONG),
+        "official_long": list(RECSYS_OFFICIAL_LONG.values()),
+    })
+    out["ours_full"] = out.year.map(ours).fillna(0).astype(int)
+    out["diff"] = out.ours_full - out.official_long
+    out["separated_as_other_track"] = out.year.map(repro).fillna(0).astype(int)
+    return out
+
+
+def sensitivity_without_recsys(core: pd.DataFrame, topics: list[str]) -> pd.DataFrame:
+    """RecSys を除いた場合の期間比較（感度分析）。
+
+    RecSys 2023・2024 は DBLP に Reproducibility の独立見出しが無く、
+    抽出数が公表統計を上回る。結論がその影響で動いていないかを確認する。
+    """
+    out = share_by_period(core[core.venue != "RecSys"], topics)
+    return out
+
+
 def run() -> dict[str, pd.DataFrame]:
     df = pd.read_csv(INTERIM / "papers_classified.csv")
     topics = list(load_topics())
@@ -115,6 +146,8 @@ def run() -> dict[str, pd.DataFrame]:
         "topic_share_by_period": share_by_period(core, topics),
         "topic_share_by_venue_period": share_by_venue_period(core, topics),
         "llm_cooccurrence": llm_cooccurrence(core, topics),
+        "recsys_count_check": recsys_count_check(df),
+        "sensitivity_without_recsys": sensitivity_without_recsys(core, topics),
     }
     PROCESSED.mkdir(parents=True, exist_ok=True)
     for name, t in tables.items():
