@@ -1,0 +1,10 @@
+topic,2019-2021,2023-2025,diff,ratio
+graph,141.0,189.0,48.0,1.34
+sequential,112.0,247.0,135.0,2.21
+causal_debiasing,49.0,93.0,44.0,1.9
+fairness_explainability,61.0,96.0,35.0,1.57
+multimodal,23.0,94.0,71.0,4.09
+reinforcement_learning,53.0,79.0,26.0,1.49
+coldstart_federated,72.0,186.0,114.0,2.58
+llm,2.0,173.0,171.0,86.5
+_total_recsys,647.0,1140.0,493.0,1.76

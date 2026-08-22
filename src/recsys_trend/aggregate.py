@@ -51,6 +51,27 @@ def share_by_year(core: pd.DataFrame, topics: list[str]) -> pd.DataFrame:
     return out.round(2).reset_index()
 
 
+def counts_by_year(df: pd.DataFrame, core: pd.DataFrame, topics: list[str]) -> pd.DataFrame:
+    """シェアではなく実数。シェアの減少が「絶対数の減少」を意味するとは限らない。"""
+    out = core.groupby("year")[topics].sum().astype(int)
+    out.insert(0, "n_recsys", core.groupby("year").size())
+    out.insert(0, "n_full", df[df.track_class == "full"].groupby("year").size())
+    return out.reset_index()
+
+
+def counts_by_period(core: pd.DataFrame, topics: list[str]) -> pd.DataFrame:
+    a = core[core.year.between(*PERIODS["2019-2021"])]
+    b = core[core.year.between(*PERIODS["2023-2025"])]
+    out = pd.DataFrame({"2019-2021": a[topics].sum().astype(int),
+                        "2023-2025": b[topics].sum().astype(int)})
+    out["diff"] = out["2023-2025"] - out["2019-2021"]
+    out["ratio"] = (out["2023-2025"] / out["2019-2021"].replace(0, pd.NA)).round(2)
+    out.loc["_total_recsys"] = [len(a), len(b), len(b) - len(a),
+                                round(len(b) / len(a), 2)]
+    out.index.name = "topic"
+    return out.reset_index()
+
+
 def share_by_period(core: pd.DataFrame, topics: list[str]) -> pd.DataFrame:
     c = core.copy()
     c["period"] = c.year.map(period_of)
@@ -143,6 +164,8 @@ def run() -> dict[str, pd.DataFrame]:
     tables = {
         "denominators": denominators(df),
         "topic_share_by_year": share_by_year(core, topics),
+        "topic_counts_by_year": counts_by_year(df, core, topics),
+        "topic_counts_by_period": counts_by_period(core, topics),
         "topic_share_by_period": share_by_period(core, topics),
         "topic_share_by_venue_period": share_by_venue_period(core, topics),
         "llm_cooccurrence": llm_cooccurrence(core, topics),

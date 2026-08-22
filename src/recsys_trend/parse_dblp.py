@@ -83,6 +83,11 @@ def parse_edition(edition: dict) -> list[dict]:
                     "authors": "; ".join(
                         a.text for a in ip.iter("author") if a.text
                     ),
+                    # 著者の同定には表記名ではなく DBLP の pid を使う
+                    # （同姓同名は pid で区別される）
+                    "author_pids": "; ".join(
+                        a.get("pid") for a in ip.iter("author") if a.get("pid")
+                    ),
                     "n_authors": sum(1 for a in ip.iter("author") if a.text),
                     "pages": pages,
                     "page_count": page_count(pages),

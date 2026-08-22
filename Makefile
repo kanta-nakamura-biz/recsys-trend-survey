@@ -27,6 +27,7 @@ arxiv:
 
 aggregate:
 	$(PY) -m src.recsys_trend.aggregate
+	$(PY) -m src.recsys_trend.author_flow
 
 figures:
 	$(PY) -m src.recsys_trend.viz
