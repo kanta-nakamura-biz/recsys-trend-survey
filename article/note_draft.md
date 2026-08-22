@@ -36,7 +36,6 @@ DBLPから主要6会議（RecSys / SIGIR / KDD / WWW / WSDM / CIKM）の2019〜2
 
 > 🔗 分析リポジトリ: https://github.com/kanta-nakamura-biz/recsys-trend-survey
 > 🔗 技術版（Zenn）: （Zenn公開後に記入）
-> 🔗 数字の読み方の話（はてなブログ）: （はてな公開後に記入）
 
 ---
 
