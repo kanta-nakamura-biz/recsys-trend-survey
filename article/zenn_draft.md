@@ -15,7 +15,7 @@ DBLP から主要6会議（RecSys / SIGIR / KDD / WWW / WSDM / CIKM）の
 
 分析スクリプトと集計結果、および判定の全件一覧は GitHub で公開している。
 
-> 🔗 リポジトリ: （URL）
+> 🔗 リポジトリ: https://github.com/kanta-nakamura-biz/recsys-trend-survey
 
 **最初に立場を明確にしておく。私は現在、レコメンドシステムの実務に
 直接携わっているわけではない。** 事業会社のデータアナリストとして
@@ -267,7 +267,7 @@ LLM に次ぐ増加軸で、会議録にはまだ一部しか現れていない�
 集計スクリプト、判定の全件一覧、限界の詳細は GitHub に置いてある。
 分類の妥当性を確認したい方は `reports/classification_audit.md` を見てほしい。
 
-> 🔗 リポジトリ: （URL）
+> 🔗 リポジトリ: https://github.com/kanta-nakamura-biz/recsys-trend-survey
 
 ---
 

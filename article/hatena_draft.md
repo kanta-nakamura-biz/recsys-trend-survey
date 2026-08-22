@@ -22,8 +22,8 @@ DBLP から主要6会議（RecSys / SIGIR / KDD / WWW / WSDM / CIKM）の
 技術的な詳細（トラックの切り出し方、分類辞書、限界の全リスト）は
 Zenn の技術版に書いた。
 
-> 🔗 リポジトリ: （URL）
-> 🔗 技術版（Zenn）: （URL）
+> 🔗 リポジトリ: https://github.com/kanta-nakamura-biz/recsys-trend-survey
+> 🔗 技術版（Zenn）: （Zenn公開後に記入）
 
 ---
 
@@ -214,8 +214,8 @@ arXiv では加速しているが、会議録にはまだ十分現れていな�
 
 集計スクリプト、判定の全件一覧、限界の詳細は GitHub に置いてある。
 
-> 🔗 リポジトリ: （URL）
-> 🔗 技術版（Zenn）: （URL）
+> 🔗 リポジトリ: https://github.com/kanta-nakamura-biz/recsys-trend-survey
+> 🔗 技術版（Zenn）: （Zenn公開後に記入）
 
 ---
 
