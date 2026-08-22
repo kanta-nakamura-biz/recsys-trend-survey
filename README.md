@@ -4,7 +4,7 @@
 どう変わったかを、査読済み会議録の実データで定量化する再現可能な分析。
 
 - **分析レポート**: [`reports/analysis_report.md`](reports/analysis_report.md)
-- **記事**: Zenn / はてなブログ / note（公開後にリンクを追加）
+- **記事**: Zenn / note（公開後にリンクを追加）
 
 ![topic shifts](reports/figures/fig1_period_change.png)
 
