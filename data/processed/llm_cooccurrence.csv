@@ -1,0 +1,8 @@
+topic,label,label_ja,llm_share,nonllm_share,diff_pp
+sequential,Sequential / Session-based,系列 / セッション推薦,15.03,22.85,-7.82
+coldstart_federated,Cold-start / Federated,コールドスタート / 連合学習,9.25,17.58,-8.33
+multimodal,Multimodal,マルチモーダル,8.09,8.27,-0.18
+reinforcement_learning,Reinforcement Learning,強化学習,6.94,6.93,0.01
+fairness_explainability,Fairness / Explainability,公平性 / 説明可能性,5.78,8.89,-3.11
+graph,Graph / GNN,グラフ / GNN,1.73,19.23,-17.5
+causal_debiasing,Causal / Debiasing,因果推論 / debiasing,1.16,9.41,-8.25

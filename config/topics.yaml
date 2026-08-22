@@ -1,0 +1,97 @@
+# トピック8軸のキーワード辞書。マルチラベル（1論文が複数軸に属してよい）。
+# タイトルのみでの判定になるため、ここで拾えなかった論文は LLM ラベリングに回す。
+#
+# 注意: 「bias」は debiasing 文脈（popularity/exposure/selection bias）と
+# 公平性文脈（gender/demographic bias）で意味が異なるため、
+# 前者を causal_debiasing、後者を fairness_explainability に振り分けている。
+
+topics:
+  graph:
+    label: Graph / GNN
+    label_ja: グラフ / GNN
+    include:
+      - 'graph neural|\bgnn\b|\bgcn\b|\bgat\b|graph convolut|graph attention'
+      - 'message passing|graph embedding|graph learning|graph[- ]based'
+      - 'hypergraph|heterogeneous (information )?(graph|network)|bipartite graph'
+      - 'knowledge graph|\bkg\b'
+      - 'random walk|network embedding'
+      - 'graph contrastive|graph transformer|graph signal|spectral'
+
+  sequential:
+    label: Sequential / Session-based
+    label_ja: 系列 / セッション推薦
+    include:
+      - 'sequential recommend|sequence[- ]aware|sequential model'
+      - 'session[- ]based|session[- ]aware'
+      - 'next[- ]item|next[- ]basket|next[- ]poi|next[- ]point[- ]of[- ]interest|next[- ]bundle'
+      - 'user behavior sequence|behavior sequence|interaction sequence'
+      - 'temporal (dynamics|recommend|user)|dynamic user (interest|preference)'
+      - 'sasrec|bert4rec|gru4rec'
+      - 'lifelong|long[- ]term (user )?(interest|behavior)'
+
+  causal_debiasing:
+    label: Causal / Debiasing
+    label_ja: 因果推論 / debiasing
+    include:
+      - 'causal|counterfactual|causality'
+      - 'debias|de[- ]bias|unbiased|bias[- ]correct'
+      - 'propensity|inverse propensity|\bips\b|doubly robust'
+      - 'popularity bias|exposure bias|selection bias|position bias|conformity bias'
+      - 'off[- ]policy (evaluation|learning|correction)'
+      - 'uplift|treatment effect|confound'
+      - 'missing not at random|\bmnar\b'
+
+  fairness_explainability:
+    label: Fairness / Explainability
+    label_ja: 公平性 / 説明可能性
+    include:
+      - 'fair(ness)?\b|unfair'
+      - 'explainab|explanation|interpretab|transparen'
+      - 'accountab|ethic|responsib|trustworthy'
+      - 'discriminat|demographic parity|equal opportunity'
+      - 'filter bubble|echo chamber|polariz'
+      - 'calibrat(ed|ion) recommend'
+
+  multimodal:
+    label: Multimodal
+    label_ja: マルチモーダル
+    include:
+      - 'multi[- ]?modal|cross[- ]modal'
+      - 'visual|image|video|micro[- ]video|photo'
+      - 'audio|acoustic|speech'
+      - 'text and image|vision[- ]language|\bclip\b'
+      - 'multimedia'
+
+  reinforcement_learning:
+    label: Reinforcement Learning
+    label_ja: 強化学習
+    include:
+      - 'reinforcement learning|\brl\b|\bdrl\b'
+      - 'bandit|thompson sampling|upper confidence bound|\bucb\b'
+      - 'markov decision|\bmdp\b|policy gradient|actor[- ]critic|q[- ]learning|\bdqn\b'
+      - 'exploration[- ]exploitation'
+      - 'interactive recommend|conversational recommend'
+
+  coldstart_federated:
+    label: Cold-start / Federated
+    label_ja: コールドスタート / 連合学習
+    include:
+      - 'cold[- ]start|cold user|cold item'
+      - 'few[- ]shot|zero[- ]shot|meta[- ]learning|\bmaml\b'
+      - 'federated|\bfl\b'
+      - 'privacy[- ]preserv|differential privacy|decentraliz|on[- ]device|edge device'
+      - 'cross[- ]domain (recommend|transfer)|transfer learning|domain adaptation'
+
+  llm:
+    label: LLM-based
+    label_ja: LLM ベース
+    include:
+      - 'large language model|\bllms?\b|\bgpt\b|chatgpt|\bbert\b(?!4rec)|\bt5\b|llama'
+      - 'language model|foundation model|pre[- ]trained model|pretrain'
+      - 'prompt|in[- ]context learning|instruction tun|chain[- ]of[- ]thought'
+      - 'generative recommend|retrieval[- ]augmented|\brag\b'
+      - 'agentic|llm[- ]based agent|llm agent|language model agent'
+      - 'semantic id|generative retrieval'
+    exclude:
+      # LLM 以前の「マルチエージェント強化学習」を LLM 軸に誤って含めない
+      - 'multi[- ]agent|agent[- ]initiated|agent[- ]based simulation'

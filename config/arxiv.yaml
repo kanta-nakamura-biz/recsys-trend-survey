@@ -1,0 +1,13 @@
+# arXiv API 用のクエリ語彙。
+# 推薦関連プレプリントの母集団をどう切り出すかだけを定義する。
+# トピック分類は DBLP 側と同じ config/topics.yaml の正規表現をローカルで適用するため、
+# ここにトピック語彙は持たない。
+category: cs.IR
+start: '2019-01'
+end: '2026-08'
+
+# 推薦関連論文を絞り込む条件（分母および全トピッククエリの前提条件）
+recsys_terms:
+  - recommendation
+  - recommender
+  - collaborative filtering

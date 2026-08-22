@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+data/raw/
+.DS_Store
+data/interim/unlabeled.csv
+data/interim/unlabeled_indexed.csv

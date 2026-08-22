@@ -1,0 +1,9 @@
+topic,label,label_ja,2019-2021,2023-2025,delta_pp,ratio
+llm,LLM-based,LLM ベース,0.31,15.18,14.87,48.97
+coldstart_federated,Cold-start / Federated,コールドスタート / 連合学習,11.13,16.32,5.19,1.47
+multimodal,Multimodal,マルチモーダル,3.55,8.25,4.7,2.32
+sequential,Sequential / Session-based,系列 / セッション推薦,17.31,21.67,4.36,1.25
+causal_debiasing,Causal / Debiasing,因果推論 / debiasing,7.57,8.16,0.59,1.08
+fairness_explainability,Fairness / Explainability,公平性 / 説明可能性,9.43,8.42,-1.01,0.89
+reinforcement_learning,Reinforcement Learning,強化学習,8.19,6.93,-1.26,0.85
+graph,Graph / GNN,グラフ / GNN,21.79,16.58,-5.21,0.76

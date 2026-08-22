@@ -1,0 +1,55 @@
+# トラック分類ルール。上から順に評価し、最初にマッチしたものを採用する。
+# 見出し表記は会議・年で大きく揺れるため、
+#   (1) 見出しが決定的な語を含む場合はそれを優先し、
+#   (2) 主題別セッション名など見出しが判定材料にならない場合のみページ数で判定する。
+# 判定結果は reports/track_mapping.md に全件出力して目視検証する。
+
+# 1. 主会議の査読論文ではないもの（招待講演・デモ・チュートリアル等）
+excluded_patterns:
+  - 'demo|demonstration'
+  - 'tutorial'
+  - 'workshop'
+  - 'doctoral|phd symposium|consortium'
+  - 'keynote|invited talk|plenary'
+  - 'panel'
+  - 'challenge'
+  - 'late[- ]breaking|\blbr\b'
+  - 'test of time|award|opening|closing|sponsor|welcome'
+  - 'diversity and inclusion'
+  - 'abstract'
+  - '\btalks?\b'
+
+# 2. 産業界向けトラック（主集計からは外すが、別途集計できるよう区別して保持する）
+industry_patterns:
+  - 'applied data'
+  - '\bads track\b'
+  - 'applied research'
+  - 'industry|industrial'
+  - 'sirip'
+  - 'practice and experience'
+
+# 3. 主研究トラックとは別枠の査読トラック（比較の一貫性のため主集計から外す）
+other_track_patterns:
+  - 'resource'
+  - 'reproducib'
+  - 'perspective'
+  - 'dataset|benchmark'
+  - 'survey'
+  - 'history of the web'
+  - 'special day|health day'
+
+# 4. 見出しが明示的に短編を示すもの（ページ数より優先。SIGIR には8-9ページの
+#    "Short Research Papers" が存在するため、見出しを優先しないと取りこぼす）
+short_patterns:
+  - '\bshort\b'
+
+# 5. 見出しが明示的にフル論文を示すもの
+full_patterns:
+  - '\bfull\b|\blong\b|research track|technical presentation'
+
+# 6. 上記いずれにも当たらない主題別セッション名は、ページ数で判定する。
+#    各会議のページ数分布は 8-9 ページ付近で明確に二峰化する（reports/track_mapping.md 参照）。
+#    WWW のみ短編が 7-8 ページあるため閾値を 9 に上げる。
+full_paper_min_pages:
+  default: 8
+  WWW: 9

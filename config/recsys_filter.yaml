@@ -1,0 +1,30 @@
+# 汎用会議（SIGIR/KDD/WWW/WSDM/CIKM）から「推薦システム関連論文」を抽出する語彙。
+# RecSys は会議全体が対象なのでこのフィルタを適用しない（config/venues.yaml 参照）。
+#
+# DBLP はアブストラクトを持たないためタイトルのみでの判定になる。
+# 再現率が課題なので、境界事例を reports/recsys_filter_audit.md に出力して検証する。
+include_patterns:
+  # 中核語
+  - 'recommend'          # recommendation / recommender / recommending
+  - 'collaborative filtering'
+  - 'matrix factorization'
+  - 'personaliz|personalis'
+  - 'user modeling|user modelling|user profiling'
+  # クリック予測・広告配信（実務上の推薦タスク）
+  - 'click[- ]through|\bctr\b'
+  - 'conversion rate prediction|\bcvr\b'
+  # 推薦タスクの言い回し
+  - 'next[- ]item|next[- ]basket|next[- ]poi|next[- ]point[- ]of[- ]interest'
+  - 'session[- ]based|sequential recommend'
+  - 'cold[- ]start'
+  - 'implicit feedback'
+  - 'top-\s?n|top-\s?k ranking'
+  - 'item embedding|user embedding|user-item'
+  - 'ctr prediction'
+  - 'feed ranking|news feed'
+  - 'bundle recommendation|cross[- ]domain recommend'
+  - 'point[- ]of[- ]interest'
+
+# include にマッチしても推薦研究ではないものを除く
+exclude_patterns:
+  - 'friend recommendation for.*security'   # 例示用のプレースホルダ（実質無効）

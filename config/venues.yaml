@@ -1,0 +1,32 @@
+# 対象会議と収集期間の定義。
+# main_booktitle: DBLP の <booktitle> がこの正規表現に完全一致する proceedings のみを
+#   「本会議の主会議録」とみなす。Companion / Workshops / "X@VENUE" は除外される。
+#   KDD は 2025 年以降 volume 分割されるため "KDD (1)" 形式を許容する。
+years: [2019, 2020, 2021, 2022, 2023, 2024, 2025]
+
+venues:
+  recsys:
+    name: RecSys
+    main_booktitle: '^RecSys$'
+    # RecSys は会議全体が推薦研究なので推薦関連フィルタを適用しない
+    apply_recsys_filter: false
+  sigir:
+    name: SIGIR
+    main_booktitle: '^SIGIR$'
+    apply_recsys_filter: true
+  kdd:
+    name: KDD
+    main_booktitle: '^KDD( \(\d+\))?$'
+    apply_recsys_filter: true
+  www:
+    name: WWW
+    main_booktitle: '^WWW$'
+    apply_recsys_filter: true
+  wsdm:
+    name: WSDM
+    main_booktitle: '^WSDM$'
+    apply_recsys_filter: true
+  cikm:
+    name: CIKM
+    main_booktitle: '^CIKM$'
+    apply_recsys_filter: true
