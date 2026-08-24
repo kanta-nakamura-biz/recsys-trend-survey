@@ -218,6 +218,33 @@ def fig_llm_cooccurrence() -> Path:
     return out
 
 
+def fig_author_origin() -> Path | None:
+    """2024–25年にLLM論文を書いた著者の出自別内訳。乗り換えではなく新規参入が主因。"""
+    path = PROCESSED / "author_llm_origin.csv"
+    if not path.exists():
+        return None
+    df = pd.read_csv(path).sort_values("割合(%)")
+    fig, ax = plt.subplots(figsize=(7.6, 3.4))
+    colors = [ORANGE if label == "元GNN勢" else BLUE for label in df["出自"]]
+    bars = ax.barh(df["出自"], df["割合(%)"], color=colors, height=0.56)
+
+    for bar, row in zip(bars, df.itertuples()):
+        ax.text(row._3 + 1.2, bar.get_y() + bar.get_height() / 2,
+                f"{row._3:.1f}%（{row.人数}人）", va="center", color=INK_2, fontsize=9.5)
+
+    ax.set_xlabel("2024–25年にLLM-based論文を書いた著者795人に占める割合（%）")
+    ax.set_title("LLM論文を書いた著者の内訳\n主因は新規参入。元GNN勢はGNNをやめていない",
+                 loc="left", color=INK)
+    ax.set_xlim(0, df["割合(%)"].max() * 1.32)
+    ax.xaxis.grid(True); ax.set_axisbelow(True)
+    _despine(ax, keep=("bottom",))
+    ax.tick_params(left=False)
+    fig.tight_layout()
+    out = FIGURES / "fig7_author_origin.png"
+    fig.savefig(out, bbox_inches="tight"); plt.close(fig)
+    return out
+
+
 def fig_arxiv() -> Path | None:
     """arXiv 側の月次シェア。件数が小さくノイズが乗るため 3 ヶ月移動平均で均す。"""
     path = PROCESSED / "arxiv_monthly.csv"
@@ -300,7 +327,7 @@ def run() -> list[Path]:
     FIGURES.mkdir(parents=True, exist_ok=True)
     made = [fig_period_change(), fig_yearly_small_multiples(),
             fig_venue_heatmap(), fig_llm_cooccurrence()]
-    for fn in (fig_arxiv, fig_conference_vs_preprint):
+    for fn in (fig_author_origin, fig_arxiv, fig_conference_vs_preprint):
         out = fn()
         if out:
             made.append(out)
