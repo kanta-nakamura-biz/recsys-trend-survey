@@ -48,8 +48,13 @@
 | トピック | 2019–2021 | 2023–2025 | 変化 |
 |---|---:|---:|---:|
 | LLM-based | 0.3% | 15.2% | **+14.9pt** |
+| Cold-start / Federated | 11.1% | 16.3% | +5.2pt |
+| Multimodal | 3.6% | 8.3% | +4.7pt |
+| Sequential / Session-based | 17.3% | 21.7% | +4.4pt |
+| Causal / Debiasing | 7.6% | 8.2% | +0.6pt |
+| Fairness / Explainability | 9.4% | 8.4% | −1.0pt |
+| Reinforcement Learning | 8.2% | 6.9% | −1.3pt |
 | Graph / GNN | 21.8% | 16.6% | **−5.2pt** |
-| その他6軸 | — | — | ±5pt以内 |
 
 LLMが跳ね、グラフが落ちた。ただしこの数字は「いつ」「なぜ」を隠してしまう。ここから先を掘っていく。
 
