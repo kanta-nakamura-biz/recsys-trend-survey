@@ -218,6 +218,73 @@ def fig_llm_cooccurrence() -> Path:
     return out
 
 
+def fig_topic_counts_absolute() -> Path:
+    """シェアでは落ちて見えるトピックも、実数（本数）では全軸が増えていることを示す。"""
+    df = pd.read_csv(PROCESSED / "topic_counts_by_period.csv")
+    df = df[df.topic != "_total_recsys"].copy()
+    df["label"] = df.topic.map(topic_labels())
+    df = df.sort_values("2023-2025")
+
+    y = list(range(len(df)))
+    h = 0.34
+    gap = 0.02
+    fig, ax = plt.subplots(figsize=(8.4, 4.6))
+    ax.barh([v + h / 2 + gap for v in y], df["2023-2025"], height=h, color=BLUE,
+            label="2023–2025年")
+    ax.barh([v - h / 2 - gap for v in y], df["2019-2021"], height=h, color=ORANGE,
+            label="2019–2021年")
+
+    for i, row in zip(y, df.itertuples()):
+        c1921 = getattr(row, "_2")
+        c2325 = getattr(row, "_3")
+        ax.text(c2325 + 6, i + h / 2 + gap, f"{c2325:.0f}本", va="center",
+                color=INK_2, fontsize=8.5)
+        ax.text(c1921 + 6, i - h / 2 - gap, f"{c1921:.0f}本", va="center",
+                color=INK_2, fontsize=8.5)
+
+    ax.set_yticks(y); ax.set_yticklabels(df.label)
+    ax.set_xlabel("推薦フル論文の本数")
+    ax.set_title("シェアが落ちて見えるトピックも、本数では全軸が増えている\n"
+                 "Graph / GNNはシェア−5.2ptでも本数は141→189本（1.34倍）",
+                 loc="left", color=INK)
+    ax.set_xlim(0, df[["2019-2021", "2023-2025"]].to_numpy().max() * 1.2)
+    ax.xaxis.grid(True); ax.set_axisbelow(True)
+    ax.legend(frameon=False, loc="lower right", fontsize=9)
+    _despine(ax, keep=("bottom",))
+    ax.tick_params(left=False)
+    fig.tight_layout()
+    out = FIGURES / "fig8_topic_counts_absolute.png"
+    fig.savefig(out, bbox_inches="tight"); plt.close(fig)
+    return out
+
+
+def fig_author_origin() -> Path | None:
+    """2024–25年にLLM論文を書いた著者の出自別内訳。乗り換えではなく新規参入が主因。"""
+    path = PROCESSED / "author_llm_origin.csv"
+    if not path.exists():
+        return None
+    df = pd.read_csv(path).sort_values("割合(%)")
+    fig, ax = plt.subplots(figsize=(7.6, 3.4))
+    colors = [ORANGE if label == "元GNN勢" else BLUE for label in df["出自"]]
+    bars = ax.barh(df["出自"], df["割合(%)"], color=colors, height=0.56)
+
+    for bar, row in zip(bars, df.itertuples()):
+        ax.text(row._3 + 1.2, bar.get_y() + bar.get_height() / 2,
+                f"{row._3:.1f}%（{row.人数}人）", va="center", color=INK_2, fontsize=9.5)
+
+    ax.set_xlabel("2024–25年にLLM-based論文を書いた著者795人に占める割合（%）")
+    ax.set_title("LLM論文を書いた著者の内訳\n主因は新規参入。元GNN勢はGNNをやめていない",
+                 loc="left", color=INK)
+    ax.set_xlim(0, df["割合(%)"].max() * 1.32)
+    ax.xaxis.grid(True); ax.set_axisbelow(True)
+    _despine(ax, keep=("bottom",))
+    ax.tick_params(left=False)
+    fig.tight_layout()
+    out = FIGURES / "fig7_author_origin.png"
+    fig.savefig(out, bbox_inches="tight"); plt.close(fig)
+    return out
+
+
 def fig_arxiv() -> Path | None:
     """arXiv 側の月次シェア。件数が小さくノイズが乗るため 3 ヶ月移動平均で均す。"""
     path = PROCESSED / "arxiv_monthly.csv"
@@ -299,8 +366,8 @@ def run() -> list[Path]:
     setup()
     FIGURES.mkdir(parents=True, exist_ok=True)
     made = [fig_period_change(), fig_yearly_small_multiples(),
-            fig_venue_heatmap(), fig_llm_cooccurrence()]
-    for fn in (fig_arxiv, fig_conference_vs_preprint):
+            fig_venue_heatmap(), fig_llm_cooccurrence(), fig_topic_counts_absolute()]
+    for fn in (fig_author_origin, fig_arxiv, fig_conference_vs_preprint):
         out = fn()
         if out:
             made.append(out)
